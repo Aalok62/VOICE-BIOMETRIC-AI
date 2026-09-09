@@ -223,17 +223,7 @@ export default function App() {
       setCameraRecording(false);
     }
   };
-  const [showJsonModal, setShowJsonModal] = useState(false);
   const [showObjectivesModal, setShowObjectivesModal] = useState(false);
-  const [copiedJson, setCopiedJson] = useState(false);
-
-  const copyJsonPayload = () => {
-    if (result) {
-      navigator.clipboard.writeText(JSON.stringify(result, null, 2));
-      setCopiedJson(true);
-      setTimeout(() => setCopiedJson(false), 2000);
-    }
-  };
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
@@ -888,9 +878,6 @@ export default function App() {
                 <button className="btn btn-objectives" onClick={() => setShowObjectivesModal(true)}>
                   🎯 Project Research Objectives
                 </button>
-                <button className="btn btn-telemetry" onClick={() => setShowJsonModal(true)}>
-                  📡 Developer Telemetry JSON
-                </button>
                 <button className="btn btn-download-pdf" onClick={downloadReport}>
                   📥 Download 1-Page PDF Analysis Report
                 </button>
@@ -1370,28 +1357,6 @@ export default function App() {
           )}
         </main>
       </div>
-
-      {/* 1. Developer Telemetry JSON Modal */}
-      {showJsonModal && (
-        <div className="modal-overlay" onClick={() => setShowJsonModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h3>📡 Developer IoT Telemetry JSON</h3>
-              <button className="btn-close" onClick={() => setShowJsonModal(false)}>✕</button>
-            </div>
-            <div className="modal-body">
-              <p className="modal-desc">Raw JSON telemetry payload returned from Voice Biometric AI engine:</p>
-              <pre className="json-code-box">{JSON.stringify(result, null, 2)}</pre>
-            </div>
-            <div className="modal-footer">
-              <button className="btn-copy-json" onClick={copyJsonPayload}>
-                {copiedJson ? "✓ Copied!" : "📋 Copy JSON Payload"}
-              </button>
-              <button className="btn btn-secondary" onClick={() => setShowJsonModal(false)}>Close</button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* 2. Official ASV & Voice Biometric Research Objectives Modal */}
       {showObjectivesModal && (
