@@ -1,4 +1,4 @@
-﻿"""
+"""
 src/audio/preprocessing.py
 ==========================
 Audio loading, resampling, noise reduction, normalization, and validation.
@@ -8,7 +8,10 @@ import io
 import numpy as np
 import librosa
 import soundfile as sf
-import noisereduce as nr
+try:
+    import noisereduce as nr
+except ImportError:
+    nr = None
 import sys
 import os
 
@@ -147,6 +150,8 @@ def normalize_audio(y: np.ndarray, method: str = "peak") -> np.ndarray:
 
 def reduce_noise(y: np.ndarray, sr: int) -> np.ndarray:
     """Apply spectral noise reduction."""
+    if nr is None:
+        return y.astype(np.float32)
     try:
         noise_sample_len = int(0.5 * sr)
         if len(y) > noise_sample_len * 2:
