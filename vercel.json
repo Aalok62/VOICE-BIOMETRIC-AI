@@ -1,0 +1,5 @@
+{
+  "buildCommand": "npm run build --prefix fullstack/frontend",
+  "outputDirectory": "fullstack/frontend/dist",
+  "installCommand": "npm install --prefix fullstack/frontend"
+}
