@@ -427,7 +427,11 @@ export default function App() {
 
       setResult(ensureAiVoiceInResult(data));
     } catch (err) {
-      setError(err.message);
+      if (err.message === "Failed to fetch" || err.name === "TypeError") {
+        setError("Backend Server Disconnected: Please start the backend server by running 'npm start' inside the 'fullstack/backend' directory.");
+      } else {
+        setError(err.message);
+      }
     } finally {
       setLoading(false);
     }
